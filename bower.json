@@ -1,0 +1,14 @@
+{
+  "name": "w4-inflow-tool-config-inspector",
+  "description": "Configuration inspector for W4 Inflow",
+  "version": "0.0.0",
+  "homepage": "http://www.w4software.com",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.4.x",
+    "angular-route": "1.4.x",
+    "angular-loader": "1.4.x",
+    "bootstrap": "3.3.x"
+  }
+}

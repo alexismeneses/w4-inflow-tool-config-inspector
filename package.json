@@ -1,0 +1,20 @@
+{
+  "name": "w4-inflow-tool-config-inspector",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Configuration inspector for W4 Inflow",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.3.1",
+    "grunt": "^0.4.1",
+    "grunt-cli": "^0.1.13",
+    "grunt-wiredep": "^1.7.0",
+    "load-grunt-tasks": "^0.4.0",
+    "time-grunt": "^0.3.1"
+  },
+  "scripts": {
+    "postinstall": "bower install --no-color",
+    "prebuild": "npm install",
+    "build": "grunt build"
+  }
+}

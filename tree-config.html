@@ -1,0 +1,59 @@
+<div class="container view-config">
+
+  <div>
+    <a href="#flat-config">Switch to flat view</a>
+  </div>
+
+  <script type="text/ng-template" id="config-table">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="entry in configValues | orderBy:'key'">
+            <td title="{{entry.key}}">{{entry.key | limitTo : 80}}<span ng-if="entry.key.length > 80">...</span></td>
+            <td>
+              <input type="text" ng-if="!isArray(entry.value)" ng-model="entry.value"/>
+              <div ng-if="isArray(entry.value)">
+                <ul ng-repeat="v in entry.value">
+                  <li>{{v}} <div class="btn btn-default" ng-click="removeValue(entry, v)"><span class="glyphicon glyphicon-trash"></span></div></li>
+                </ul>
+              </div>
+            </td>
+            <td><div class="btn btn-default" ng-click="removeEntry(entry)"><span class="glyphicon glyphicon-trash"></span></div></td>
+          </tr>
+        </tbody>
+      </table>
+  </script>
+  
+  <h2>Configuration</h2>
+  <div ng-repeat="category in categories | orderBy:'name'" class="category">
+    <h3 ng-click="switchDisplayed(category)">
+      <span class="glyphicon glyphicon-triangle-bottom" ng-show="!category.displayed"></span>
+      <span class="glyphicon glyphicon-triangle-top" ng-show="category.displayed"></span>
+      {{category.name}}
+    </h3>
+    <div ng-show="category.displayed">
+      <div ng-repeat="element in category.elements" style="padding-left: 20px">
+        <h4 ng-click="switchDisplayed(element)">
+          <span class="glyphicon glyphicon-triangle-bottom" ng-show="!element.displayed"></span>
+          <span class="glyphicon glyphicon-triangle-top" ng-show="element.displayed"></span>
+          {{element.name}}
+          <div class="btn btn-default" ng-click="removeElement(element)"><span class="glyphicon glyphicon-trash"></span></div>
+        </h4>
+        <ng-include ng-show="element.displayed" src="'config-table'" onload="configValues = element.values">
+        </ng-include>
+      </div>
+        <ng-include ng-if="!category.hasElements" src="'config-table'" onload="configValues = category.values">
+        </ng-include>
+    </div>
+  </div>
+  
+  <div>
+    <div class="btn btn-default" ng-click="execQueue()" ng-show="queue.length > 0"><span class="glyphicon glyphicon-floppy-save"></span> Apply changes <span class="badge">{{queue.length}} pending</span></div>
+  </div>
+</div>

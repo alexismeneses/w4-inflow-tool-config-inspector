@@ -1,0 +1,40 @@
+<div class="container view-config">
+  
+  <div>
+    <a href="#tree-config">Switch to tree view</a>
+  </div>
+ 
+    <script type="text/ng-template" id="config-table">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="entry in configValues | orderBy:'categorizedKey'">
+            <td title="{{entry.categorizedKey}}">{{entry.categorizedKey | limitTo : 80}}<span ng-if="entry.key.length > 80">...</span></td>
+            <td>
+              <input type="text" ng-if="!isArray(entry.value)" ng-model="entry.value"/>
+              <div ng-if="isArray(entry.value)">
+                <ul ng-repeat="v in entry.value">
+                  <li>{{v}} <div class="btn btn-default" ng-click="removeValue(entry, v)"><span class="glyphicon glyphicon-trash"></span></div></li>
+                </ul>
+              </div>
+            </td>
+            <td><div class="btn btn-default" ng-click="removeEntry(entry)"><span class="glyphicon glyphicon-trash"></span></div></td>
+          </tr>
+        </tbody>
+      </table>
+  </script>
+
+  <h2>Configuration</h2>
+  <ng-include ng-if="!category.hasElements" src="'config-table'" onload="configValues = config">
+  </ng-include>
+  
+  <div>
+    <div class="btn btn-default" ng-click="execQueue()" ng-show="queue.length > 0"><span class="glyphicon glyphicon-floppy-save"></span> Apply changes <span class="badge">{{queue.length}} pending</span></div>
+  </div>
+</div>
